@@ -83,21 +83,51 @@ document.addEventListener("DOMContentLoaded", () => {
   let count = 0;
   let cardChoosen = [];
   let cardChoosenId = [];
+  let winCount = 0;
   images.forEach(() => {
     let img = document.createElement("img");
     img.setAttribute("src", "assets/images/mk2.jpg");
     imgContainer.appendChild(img);
     img.setAttribute("id", count);
     count++;
+
     img.addEventListener("click", (e) => {
-      let cardId = e.target.id;
-      cardChoosen.push(images[cardId].name);
-      cardChoosenId.push(cardId);
-      e.target.setAttribute("src", images[cardId].image);
-      if (cardChoosen.length === 2) {
-        setTimeout(() => {
-          alert("haha");
-        }, 500);
+      if (
+        e.target.getAttribute("src") != "assets/images/white.png" &&
+        e.target.getAttribute("src") == "assets/images/mk2.jpg"
+      ) {
+        let cardId = e.target.id;
+        cardChoosen.push(images[cardId].name);
+        cardChoosenId.push(cardId);
+        e.target.setAttribute("src", images[cardId].image);
+        if (cardChoosen.length === 2) {
+          setTimeout(() => {
+            let choosenOne = cardChoosen[0];
+            let choosenTwo = cardChoosen[1];
+
+            if (choosenOne === choosenTwo) {
+              alert("you won");
+              let resetOne = document.getElementById(cardChoosenId[0]);
+              resetOne.setAttribute("src", "assets/images/white.png");
+              resetOne.setAttribute("disabled", "true");
+              let resetTwo = document.getElementById(cardChoosenId[1]);
+              resetTwo.setAttribute("src", "assets/images/white.png");
+
+              cardChoosen = [];
+              cardChoosenId = [];
+              winCount++;
+            } else {
+              alert("try again");
+              let resetOne = document.getElementById(cardChoosenId[0]);
+              resetOne.setAttribute("src", "assets/images/mk2.jpg");
+
+              let resetTwo = document.getElementById(cardChoosenId[1]);
+              resetTwo.setAttribute("src", "assets/images/mk2.jpg");
+              cardChoosen = [];
+              cardChoosenId = [];
+            }
+          }, 500);
+        }
       }
     });
   });
