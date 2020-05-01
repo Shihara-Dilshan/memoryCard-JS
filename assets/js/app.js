@@ -77,10 +77,28 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
+  images.sort(() => 0.5 - Math.random());
+
   let imgContainer = document.querySelector("#myGrid");
+  let count = 0;
+  let cardChoosen = [];
+  let cardChoosenId = [];
   images.forEach(() => {
     let img = document.createElement("img");
     img.setAttribute("src", "assets/images/mk2.jpg");
     imgContainer.appendChild(img);
+    img.setAttribute("id", count);
+    count++;
+    img.addEventListener("click", (e) => {
+      let cardId = e.target.id;
+      cardChoosen.push(images[cardId].name);
+      cardChoosenId.push(cardId);
+      e.target.setAttribute("src", images[cardId].image);
+      if (cardChoosen.length === 2) {
+        setTimeout(() => {
+          alert("haha");
+        }, 500);
+      }
+    });
   });
 });
